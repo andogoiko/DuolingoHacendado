@@ -14,7 +14,8 @@
         android:text="Duolingo Hacendado"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <TextView
         android:id="@+id/textView"
@@ -37,61 +38,90 @@
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="300dp"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/imageView1"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/moises" />
+                    android:orientation="vertical">
+                    android:background="#000000"
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:id="@+id/IV1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
+                        android:layout_margin="5dp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="0"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/skippy_el_mensajero_de_dios" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/IV2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="50"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY" />
+                </RelativeLayout>
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="300dp"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/arcangel_gabriel" />
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:id="@+id/IV3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="50"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/isaias_profeta" />
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/IV4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="50"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY" />
+                </RelativeLayout>
+
             </LinearLayout>
 
         </LinearLayout>
