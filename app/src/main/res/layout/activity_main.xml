@@ -47,13 +47,13 @@
                 android:layout_height="300dp"
                 android:orientation="horizontal">
 
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/LIV1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
-                    android:background="#000000"
 
                     <ImageView
                         android:id="@+id/IV1"
@@ -62,10 +62,12 @@
                         android:layout_gravity="center_vertical"
                         android:adjustViewBounds="true"
                         android:scaleType="fitXY"
-                        android:layout_margin="5dp"/>
-                </RelativeLayout>
+                        />
 
-                <RelativeLayout
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/LIV2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -79,7 +81,7 @@
                         android:layout_weight="50"
                         android:adjustViewBounds="true"
                         android:scaleType="fitXY" />
-                </RelativeLayout>
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -89,7 +91,8 @@
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/LIV3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
@@ -104,9 +107,10 @@
                         android:layout_weight="50"
                         android:adjustViewBounds="true"
                         android:scaleType="fitXY" />
-                </RelativeLayout>
+                </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/LIV4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -120,7 +124,7 @@
                         android:layout_weight="50"
                         android:adjustViewBounds="true"
                         android:scaleType="fitXY" />
-                </RelativeLayout>
+                </LinearLayout>
 
             </LinearLayout>
 
