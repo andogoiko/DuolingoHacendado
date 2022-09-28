@@ -7,6 +7,7 @@ import androidx.core.widget.ImageViewCompat;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Layout;
@@ -28,17 +29,36 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mpGut, mpNope;
     Button continuar;
 
-    int posicion = 0;
+    int numPreg;
 
-    int numPreg = 3;
+    int pregAct = 0;
 
-    int pregAct = 1;
+    int pregIMGAct = 0;
+
+    int pregBUTTAct = 0;
 
     int aciertos = 0;
 
-    List<String> IdsIV = new ArrayList<String>(Arrays.asList("IVmoises", "IVskippy", "IVgabriel", "IVisaias"));
+    //array con todas las preguntas
 
-    List<String> alPreguntas = new ArrayList<String>(Arrays.asList("¿Cuándo vuelve Bleach en 2022?", "¿Qué nota merece este trabajo?"));
+    List<String> alPreguntas = new ArrayList<String>(Arrays.asList("*¿Quién es el mensajero de dios?", "¿Cuándo vuelve Bleach en 2022?", "¿Qué nota merece este trabajo?"));
+
+    // arrays con las respuestas de las imágenes
+
+    private class objImagen {
+        String respuesta;
+        int drawableID;
+
+        public objImagen (String respuesta, int drawableID){
+            this.respuesta = respuesta;
+            this.drawableID = drawableID;
+        }
+
+    }
+
+    List<objImagen> IdsIV = new ArrayList<objImagen>(Arrays.asList(new objImagen("IVmoises", R.drawable.moises ), new objImagen("*IVskippy", R.drawable.skippy_el_mensajero_de_dios ), new objImagen("IVgabriel", R.drawable.arcangel_gabriel ), new objImagen("IVisaias", R.drawable.isaias_profeta )));
+
+    // array con las respuestas de los botones
 
     List<List<String>> alRespuestas = new ArrayList<List<String>>();
 
@@ -46,17 +66,17 @@ public class MainActivity extends AppCompatActivity {
 
     List<String> res2 = new ArrayList<String>(Arrays.asList("3", "7", "4", "*10"));
 
-
+    // arrays para saber a que objeto button o imageview nos referimos (sirve para hacer apaño dinámico)
 
     List<ImageView> imagenes = new ArrayList<ImageView>();
-    ImageView[] aImagenAct = new ImageView[4];
-    LinearLayout[] dinamicLayout = new LinearLayout[4];
     List<Button> botones = new ArrayList<Button>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        TextView textPreguntas = (TextView) findViewById(R.id.textoPregunta);
 
         continuar = findViewById(R.id.cumtinuar);
 
@@ -72,9 +92,14 @@ public class MainActivity extends AppCompatActivity {
 
                 continuar.setEnabled(false);
 
+                pregAct++;
+
                 if(pregAct < numPreg){
                     colocarPreguntas(textPreguntas);
-                    colocarRespuestas(containerRespuestas);
+                    colocarRespuestas(findViewById(R.id.layoutBotones));
+                }else{
+                    textPreguntas.setText("Tu puntuación es:");
+                    continuar.setVisibility(View.GONE);
                 }
 
             }
@@ -109,42 +134,46 @@ public class MainActivity extends AppCompatActivity {
         alRespuestas.add(res1);
         alRespuestas.add(res2);
 
+        //cogemos la cantidad de preguntas
+
+        numPreg = alPreguntas.size();
+
+        // iniciamos el programa
+
+        colocarPreguntas(textPreguntas);
+
 
         for (int i = 0; i < IdsIV.size(); i++){
-            switch (IdsIV.get(i)){
+            switch (IdsIV.get(i).respuesta){
 
                 case "IVmoises":
                     imagenes.get(i).setBackgroundResource(R.drawable.moises);
 
-                    aImagenAct[0] = imagenes.get(i);
-
                     imagenes.get(i).setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v) {
-                            opcionIncorrecta();
+                            imagenIncorrecta();
 
-                            dinamicLayout[0] = (LinearLayout) aImagenAct[0].getParent();
-                            dinamicLayout[0].setPadding(5, 5, 5, 5);
-                            dinamicLayout[0].setBackgroundColor(Color.RED);
+                            LinearLayout papi = (LinearLayout) v.getParent();
+                            papi.setPadding(5, 5, 5, 5);
+                            papi.setBackgroundColor(Color.RED);
 
                             mpNope.start();
                         }
                     });
                     break;
 
-                case "IVskippy":
+                case "*IVskippy":
                     imagenes.get(i).setBackgroundResource(R.drawable.skippy_el_mensajero_de_dios);
-
-                    aImagenAct[1] = imagenes.get(i);
 
                     imagenes.get(i).setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v) {
-                            opcionCorrecta();
+                            imagenCorrecta();
 
-                            dinamicLayout[1] = (LinearLayout) aImagenAct[1].getParent();
-                            dinamicLayout[1].setPadding(5, 5, 5, 5);
-                            dinamicLayout[1].setBackgroundColor(Color.GREEN);
+                            LinearLayout papi = (LinearLayout) v.getParent();
+                            papi.setPadding(5, 5, 5, 5);
+                            papi.setBackgroundColor(Color.GREEN);
 
                             mpGut.start();
                         }
@@ -154,16 +183,14 @@ public class MainActivity extends AppCompatActivity {
                 case "IVgabriel":
                     imagenes.get(i).setBackgroundResource(R.drawable.arcangel_gabriel);
 
-                    aImagenAct[2] = imagenes.get(i);
-
                     imagenes.get(i).setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v) {
-                            opcionIncorrecta();
+                            imagenIncorrecta();
 
-                            dinamicLayout[2] = (LinearLayout) aImagenAct[2].getParent();
-                            dinamicLayout[2].setPadding(5, 5, 5, 5);
-                            dinamicLayout[2].setBackgroundColor(Color.RED);
+                            LinearLayout papi = (LinearLayout) v.getParent();
+                            papi.setPadding(5, 5, 5, 5);
+                            papi.setBackgroundColor(Color.RED);
 
                             mpNope.start();
                         }
@@ -173,16 +200,14 @@ public class MainActivity extends AppCompatActivity {
                 case "IVisaias":
                     imagenes.get(i).setBackgroundResource(R.drawable.isaias_profeta);
 
-                    aImagenAct[3] = imagenes.get(i);
-
                     imagenes.get(i).setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v) {
-                            opcionIncorrecta();
+                            imagenIncorrecta();
 
-                            dinamicLayout[3] = (LinearLayout) aImagenAct[3].getParent();
-                            dinamicLayout[3].setPadding(5, 5, 5, 5);
-                            dinamicLayout[3].setBackgroundColor(Color.RED);
+                            LinearLayout papi = (LinearLayout) v.getParent();
+                            papi.setPadding(5, 5, 5, 5);
+                            papi.setBackgroundColor(Color.RED);
 
                             mpNope.start();
                         }
@@ -195,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void opcionIncorrecta(){
+    private void imagenIncorrecta(){
         Toast.makeText(MainActivity.this, "¡Incorrecta!", Toast.LENGTH_SHORT).show();
 
         for (int i = 0; i < IdsIV.size(); i++){
@@ -207,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void opcionCorrecta(){
+    private void imagenCorrecta(){
         aciertos++;
 
         Toast.makeText(MainActivity.this, "¡Correcta!", Toast.LENGTH_SHORT).show();
@@ -218,8 +243,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         continuar.setEnabled(true);
-
-        pregAct++;
 
     }
 
@@ -234,7 +257,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void colocarPreguntas(TextView textPreguntas){
 
-        textPreguntas.setText(alPreguntas.get(pregAct - 1));
+
+        if(alPreguntas.get(pregAct).charAt(0) != '*'){
+            textPreguntas.setText(alPreguntas.get(pregAct));
+        }else{
+            textPreguntas.setText(alPreguntas.get(pregAct).substring(1));
+        }
+
 
         /*
         // esto se ha utilizado con layouts y funciona
@@ -249,7 +278,51 @@ public class MainActivity extends AppCompatActivity {
 
     private void colocarRespuestas(LinearLayout containerRespuestas){
 
-        findViewById(R.id.layoutBotones).setVisibility(View.VISIBLE);
+        if(alPreguntas.get(pregAct).charAt(0) != '*'){
+            containerRespuestas.setVisibility(View.VISIBLE);
+
+            for (int i = 0; i < botones.size(); i++){
+
+                if(alRespuestas.get(pregBUTTAct).get(i).charAt(0) != '*'){
+                    botones.get(i).setText(alRespuestas.get(pregBUTTAct).get(i));
+
+                    botones.get(i).setOnClickListener(new View.OnClickListener(){
+                        @Override
+                        public void onClick(View v) {
+                            v.setBackgroundColor(Color.RED);
+
+                            botonIncorrecto();
+
+                            continuar.setEnabled(true);
+                        }
+                    });
+
+                }else{
+                    botones.get(i).setText(alRespuestas.get(pregBUTTAct).get(i).substring(1));
+                    botones.get(i).setOnClickListener(new View.OnClickListener(){
+                        @Override
+                        public void onClick(View v) {
+
+                            v.setBackgroundColor(Color.GREEN);
+
+                            botonCorrecto();
+
+                            continuar.setEnabled(true);
+                        }
+                    });
+                }
+
+                botones.get(i).setBackgroundColor(Color.DKGRAY);
+                botones.get(i).setEnabled(true);
+
+            }
+
+            pregBUTTAct++;
+        }else{
+            pregIMGAct++;
+        }
+
+
 
         /*
         // esto se ha utilizado con layouts y funciona
@@ -272,5 +345,29 @@ public class MainActivity extends AppCompatActivity {
         containerRespuestas.addView(res1);
         containerRespuestas.invalidate();
         */
+    }
+
+    private void botonCorrecto(){
+
+        aciertos++;
+
+        Toast.makeText(MainActivity.this, "¡Correcta!", Toast.LENGTH_SHORT).show();
+
+        for (int i = 0; i < botones.size(); i++){
+
+            botones.get(i).setEnabled(false);
+        }
+
+    }
+
+    private void botonIncorrecto(){
+
+        Toast.makeText(MainActivity.this, "¡Incorrecta!", Toast.LENGTH_SHORT).show();
+
+        for (int i = 0; i < botones.size(); i++){
+
+            botones.get(i).setEnabled(false);
+        }
+
     }
 }
