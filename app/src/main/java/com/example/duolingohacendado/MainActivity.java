@@ -25,7 +25,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    LinearLayout layout;
     MediaPlayer mpGut, mpNope;
     Button continuar;
 
@@ -35,19 +34,24 @@ public class MainActivity extends AppCompatActivity {
 
     int pregAct = 1;
 
+    int aciertos = 0;
+
     List<String> IdsIV = new ArrayList<String>(Arrays.asList("IVmoises", "IVskippy", "IVgabriel", "IVisaias"));
 
-    List<String> alPreguntas = new ArrayList<String>(Arrays.asList("¿?", "¿Qué nota merece este trabajo?"));
+    List<String> alPreguntas = new ArrayList<String>(Arrays.asList("¿Cuándo vuelve Bleach en 2022?", "¿Qué nota merece este trabajo?"));
 
     List<List<String>> alRespuestas = new ArrayList<List<String>>();
 
-    List<String> res1 = new ArrayList<String>(Arrays.asList("IVmoises", "IVskippy"));
+    List<String> res1 = new ArrayList<String>(Arrays.asList("*10 de Octubre", "3 de Octubre", "27 de Octubre", "19 de Octubre"));
 
     List<String> res2 = new ArrayList<String>(Arrays.asList("3", "7", "4", "*10"));
 
 
 
     List<ImageView> imagenes = new ArrayList<ImageView>();
+    ImageView[] aImagenAct = new ImageView[4];
+    LinearLayout[] dinamicLayout = new LinearLayout[4];
+    List<Button> botones = new ArrayList<Button>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,14 +68,12 @@ public class MainActivity extends AppCompatActivity {
 
                 cleanChilds(containerRespuestas);
 
-                LinearLayout containerPreguntas = (LinearLayout) findViewById(R.id.questionsContainer);
-
-                cleanChilds(containerPreguntas);
+                TextView textPreguntas = (TextView) findViewById(R.id.textoPregunta);
 
                 continuar.setEnabled(false);
 
                 if(pregAct < numPreg){
-                    colocarPreguntas(containerPreguntas);
+                    colocarPreguntas(textPreguntas);
                     colocarRespuestas(containerRespuestas);
                 }
 
@@ -95,6 +97,13 @@ public class MainActivity extends AppCompatActivity {
         imagenes.add(findViewById(R.id.IV3));
         imagenes.add(findViewById(R.id.IV4));
 
+        //recogemos los botones a pelo
+
+        botones.add(findViewById(R.id.bResp1));
+        botones.add(findViewById(R.id.bResp2));
+        botones.add(findViewById(R.id.bResp3));
+        botones.add(findViewById(R.id.bResp4));
+
         //introducimos las respuestas nuevas
 
         alRespuestas.add(res1);
@@ -106,32 +115,17 @@ public class MainActivity extends AppCompatActivity {
 
                 case "IVmoises":
                     imagenes.get(i).setBackgroundResource(R.drawable.moises);
+
+                    aImagenAct[0] = imagenes.get(i);
+
                     imagenes.get(i).setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v) {
                             opcionIncorrecta();
-                            switch (IdsIV.indexOf("IVmoises")){
 
-                                case 0:
-                                    findViewById(R.id.LIV1).setPadding(5, 5, 5, 5);
-                                    findViewById(R.id.LIV1).setBackgroundColor(Color.RED);
-                                    break;
-
-                                case 1:
-                                    findViewById(R.id.LIV2).setPadding(5, 5, 5, 5);
-                                    findViewById(R.id.LIV2).setBackgroundColor(Color.RED);
-                                    break;
-
-                                case 2:
-                                    findViewById(R.id.LIV3).setPadding(5, 5, 5, 5);
-                                    findViewById(R.id.LIV3).setBackgroundColor(Color.RED);
-                                    break;
-
-                                case 3:
-                                    findViewById(R.id.LIV4).setPadding(5, 5, 5, 5);
-                                    findViewById(R.id.LIV4).setBackgroundColor(Color.RED);
-                                    break;
-                            }
+                            dinamicLayout[0] = (LinearLayout) aImagenAct[0].getParent();
+                            dinamicLayout[0].setPadding(5, 5, 5, 5);
+                            dinamicLayout[0].setBackgroundColor(Color.RED);
 
                             mpNope.start();
                         }
@@ -140,32 +134,18 @@ public class MainActivity extends AppCompatActivity {
 
                 case "IVskippy":
                     imagenes.get(i).setBackgroundResource(R.drawable.skippy_el_mensajero_de_dios);
+
+                    aImagenAct[1] = imagenes.get(i);
+
                     imagenes.get(i).setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v) {
                             opcionCorrecta();
-                            switch (IdsIV.indexOf("IVskippy")){
 
-                                case 0:
-                                    findViewById(R.id.LIV1).setPadding(5, 5, 5, 5);
-                                    findViewById(R.id.LIV1).setBackgroundColor(Color.parseColor("#06D100"));
-                                    break;
+                            dinamicLayout[1] = (LinearLayout) aImagenAct[1].getParent();
+                            dinamicLayout[1].setPadding(5, 5, 5, 5);
+                            dinamicLayout[1].setBackgroundColor(Color.GREEN);
 
-                                case 1:
-                                    findViewById(R.id.LIV2).setPadding(5, 5, 5, 5);
-                                    findViewById(R.id.LIV2).setBackgroundColor(Color.parseColor("#06D100"));
-                                    break;
-
-                                case 2:
-                                    findViewById(R.id.LIV3).setPadding(5, 5, 5, 5);
-                                    findViewById(R.id.LIV3).setBackgroundColor(Color.parseColor("#06D100"));
-                                    break;
-
-                                case 3:
-                                    findViewById(R.id.LIV4).setPadding(5, 5, 5, 5);
-                                    findViewById(R.id.LIV4).setBackgroundColor(Color.parseColor("#06D100"));
-                                    break;
-                            }
                             mpGut.start();
                         }
                     });
@@ -173,32 +153,18 @@ public class MainActivity extends AppCompatActivity {
 
                 case "IVgabriel":
                     imagenes.get(i).setBackgroundResource(R.drawable.arcangel_gabriel);
+
+                    aImagenAct[2] = imagenes.get(i);
+
                     imagenes.get(i).setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v) {
                             opcionIncorrecta();
-                            switch (IdsIV.indexOf("IVgabriel")){
 
-                                case 0:
-                                    findViewById(R.id.LIV1).setPadding(5, 5, 5, 5);
-                                    findViewById(R.id.LIV1).setBackgroundColor(Color.RED);
-                                    break;
+                            dinamicLayout[2] = (LinearLayout) aImagenAct[2].getParent();
+                            dinamicLayout[2].setPadding(5, 5, 5, 5);
+                            dinamicLayout[2].setBackgroundColor(Color.RED);
 
-                                case 1:
-                                    findViewById(R.id.LIV2).setPadding(5, 5, 5, 5);
-                                    findViewById(R.id.LIV2).setBackgroundColor(Color.RED);
-                                    break;
-
-                                case 2:
-                                    findViewById(R.id.LIV3).setPadding(5, 5, 5, 5);
-                                    findViewById(R.id.LIV3).setBackgroundColor(Color.RED);
-                                    break;
-
-                                case 3:
-                                    findViewById(R.id.LIV4).setPadding(5, 5, 5, 5);
-                                    findViewById(R.id.LIV4).setBackgroundColor(Color.RED);
-                                    break;
-                            }
                             mpNope.start();
                         }
                     });
@@ -206,32 +172,18 @@ public class MainActivity extends AppCompatActivity {
 
                 case "IVisaias":
                     imagenes.get(i).setBackgroundResource(R.drawable.isaias_profeta);
+
+                    aImagenAct[3] = imagenes.get(i);
+
                     imagenes.get(i).setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v) {
                             opcionIncorrecta();
-                            switch (IdsIV.indexOf("IVisaias")){
 
-                                case 0:
-                                    findViewById(R.id.LIV1).setPadding(5, 5, 5, 5);
-                                    findViewById(R.id.LIV1).setBackgroundColor(Color.RED);
-                                    break;
+                            dinamicLayout[3] = (LinearLayout) aImagenAct[3].getParent();
+                            dinamicLayout[3].setPadding(5, 5, 5, 5);
+                            dinamicLayout[3].setBackgroundColor(Color.RED);
 
-                                case 1:
-                                    findViewById(R.id.LIV2).setPadding(5, 5, 5, 5);
-                                    findViewById(R.id.LIV2).setBackgroundColor(Color.RED);
-                                    break;
-
-                                case 2:
-                                    findViewById(R.id.LIV3).setPadding(5, 5, 5, 5);
-                                    findViewById(R.id.LIV3).setBackgroundColor(Color.RED);
-                                    break;
-
-                                case 3:
-                                    findViewById(R.id.LIV4).setPadding(5, 5, 5, 5);
-                                    findViewById(R.id.LIV4).setBackgroundColor(Color.RED);
-                                    break;
-                            }
                             mpNope.start();
                         }
                     });
@@ -256,6 +208,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void opcionCorrecta(){
+        aciertos++;
+
         Toast.makeText(MainActivity.this, "¡Correcta!", Toast.LENGTH_SHORT).show();
 
         for (int i = 0; i < IdsIV.size(); i++){
@@ -278,15 +232,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void colocarPreguntas(LinearLayout containerPreguntas){
+    private void colocarPreguntas(TextView textPreguntas){
+
+        textPreguntas.setText(alPreguntas.get(pregAct - 1));
+
+        /*
+        // esto se ha utilizado con layouts y funciona
+
         TextView pregunta = new TextView(this);
         pregunta.setText("text");
 
         containerPreguntas.addView(pregunta);
         containerPreguntas.invalidate();
+        */
     }
 
     private void colocarRespuestas(LinearLayout containerRespuestas){
+
+        findViewById(R.id.layoutBotones).setVisibility(View.VISIBLE);
+
+        /*
+        // esto se ha utilizado con layouts y funciona
+
         Button res1 = new Button(this);
         res1.setId(View.generateViewId());
         int id = res1.getId();
@@ -304,8 +271,6 @@ public class MainActivity extends AppCompatActivity {
 
         containerRespuestas.addView(res1);
         containerRespuestas.invalidate();
+        */
     }
-
-    /*array con las respuestas y la k tenga un ascterisco sera la correcta, función onclick nueva*/
-
 }
