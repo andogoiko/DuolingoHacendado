@@ -26,7 +26,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    MediaPlayer mpGut, mpNope;
+    MediaPlayer mpGut, mpNope, mpFin;
     Button continuar;
 
     int numPreg;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    List<objImagen> IdsIV = new ArrayList<objImagen>(Arrays.asList(new objImagen("IVmoises", R.drawable.moises ), new objImagen("*IVskippy", R.drawable.skippy_el_mensajero_de_dios ), new objImagen("IVgabriel", R.drawable.arcangel_gabriel ), new objImagen("IVisaias", R.drawable.isaias_profeta )));
+    List<List<objImagen>> alIMGRespuestas = new ArrayList<List<objImagen>>(Arrays.asList(new ArrayList<objImagen>(Arrays.asList(new objImagen("IVmoises", R.drawable.moises ), new objImagen("*IVskippy", R.drawable.skippy_el_mensajero_de_dios ), new objImagen("IVgabriel", R.drawable.arcangel_gabriel ), new objImagen("IVisaias", R.drawable.isaias_profeta )))));
 
     // array con las respuestas de los botones
 
@@ -96,21 +96,36 @@ public class MainActivity extends AppCompatActivity {
 
                 if(pregAct < numPreg){
                     colocarPreguntas(textPreguntas);
-                    colocarRespuestas(findViewById(R.id.layoutBotones));
+                    colocarRespuestas(findViewById(R.id.answersContainer));
                 }else{
+
+                    if (aciertos == 0){
+                        mpFin = MediaPlayer.create(getApplicationContext(), R.raw.c_murio);
+                    }else{
+                        mpFin = MediaPlayer.create(getApplicationContext(), R.raw.movistar_temazo);
+                    }
+
+                    mpFin.start();
+
                     textPreguntas.setText("Tu puntuación es:");
+                    textPreguntas.setTextSize(30);
+
+                    TextView resul = (TextView) findViewById(R.id.textPuntuacion);
+                    resul.setText(aciertos + "/" + alPreguntas.size());
+
+                    findViewById(R.id.layPuntuacion).setVisibility(View.VISIBLE);
+
                     continuar.setVisibility(View.GONE);
                 }
 
             }
         });
 
-        mpGut = MediaPlayer.create(this, R.raw.sabe_una_cosa);
-        mpNope = MediaPlayer.create(this, R.raw.mensajero_de_dios);
-
         /*mezclamos las respuestas*/
 
-        Collections.shuffle(IdsIV);
+        for (int i = 0; i < alIMGRespuestas.size(); i++){
+            Collections.shuffle(alIMGRespuestas.get(i));
+        }
 
         Collections.shuffle(res1);
         Collections.shuffle(res2);
@@ -142,93 +157,21 @@ public class MainActivity extends AppCompatActivity {
 
         colocarPreguntas(textPreguntas);
 
-
-        for (int i = 0; i < IdsIV.size(); i++){
-            switch (IdsIV.get(i).respuesta){
-
-                case "IVmoises":
-                    imagenes.get(i).setBackgroundResource(R.drawable.moises);
-
-                    imagenes.get(i).setOnClickListener(new View.OnClickListener(){
-                        @Override
-                        public void onClick(View v) {
-                            imagenIncorrecta();
-
-                            LinearLayout papi = (LinearLayout) v.getParent();
-                            papi.setPadding(5, 5, 5, 5);
-                            papi.setBackgroundColor(Color.RED);
-
-                            mpNope.start();
-                        }
-                    });
-                    break;
-
-                case "*IVskippy":
-                    imagenes.get(i).setBackgroundResource(R.drawable.skippy_el_mensajero_de_dios);
-
-                    imagenes.get(i).setOnClickListener(new View.OnClickListener(){
-                        @Override
-                        public void onClick(View v) {
-                            imagenCorrecta();
-
-                            LinearLayout papi = (LinearLayout) v.getParent();
-                            papi.setPadding(5, 5, 5, 5);
-                            papi.setBackgroundColor(Color.GREEN);
-
-                            mpGut.start();
-                        }
-                    });
-                    break;
-
-                case "IVgabriel":
-                    imagenes.get(i).setBackgroundResource(R.drawable.arcangel_gabriel);
-
-                    imagenes.get(i).setOnClickListener(new View.OnClickListener(){
-                        @Override
-                        public void onClick(View v) {
-                            imagenIncorrecta();
-
-                            LinearLayout papi = (LinearLayout) v.getParent();
-                            papi.setPadding(5, 5, 5, 5);
-                            papi.setBackgroundColor(Color.RED);
-
-                            mpNope.start();
-                        }
-                    });
-                    break;
-
-                case "IVisaias":
-                    imagenes.get(i).setBackgroundResource(R.drawable.isaias_profeta);
-
-                    imagenes.get(i).setOnClickListener(new View.OnClickListener(){
-                        @Override
-                        public void onClick(View v) {
-                            imagenIncorrecta();
-
-                            LinearLayout papi = (LinearLayout) v.getParent();
-                            papi.setPadding(5, 5, 5, 5);
-                            papi.setBackgroundColor(Color.RED);
-
-                            mpNope.start();
-                        }
-                    });
-                    break;
-            }
-
-
-        }
+        colocarRespuestas(findViewById(R.id.answersContainer));
 
     }
 
     private void imagenIncorrecta(){
         Toast.makeText(MainActivity.this, "¡Incorrecta!", Toast.LENGTH_SHORT).show();
 
-        for (int i = 0; i < IdsIV.size(); i++){
+        for (int i = 0; i < alIMGRespuestas.get(pregIMGAct).size(); i++){
             imagenes.get(i).getBackground().setColorFilter(Color.parseColor("#7A7A7A"), PorterDuff.Mode.MULTIPLY);
             imagenes.get(i).setEnabled(false);
         }
 
         continuar.setEnabled(true);
+
+        pregIMGAct++;
 
     }
 
@@ -237,12 +180,14 @@ public class MainActivity extends AppCompatActivity {
 
         Toast.makeText(MainActivity.this, "¡Correcta!", Toast.LENGTH_SHORT).show();
 
-        for (int i = 0; i < IdsIV.size(); i++){
+        for (int i = 0; i < alIMGRespuestas.get(pregIMGAct).size(); i++){
             imagenes.get(i).getBackground().setColorFilter(Color.parseColor("#7A7A7A"), PorterDuff.Mode.MULTIPLY);
             imagenes.get(i).setEnabled(false);
         }
 
         continuar.setEnabled(true);
+
+        pregIMGAct++;
 
     }
 
@@ -257,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void colocarPreguntas(TextView textPreguntas){
 
+        textPreguntas.setTextSize(15);
 
         if(alPreguntas.get(pregAct).charAt(0) != '*'){
             textPreguntas.setText(alPreguntas.get(pregAct));
@@ -278,8 +224,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void colocarRespuestas(LinearLayout containerRespuestas){
 
+        cleanChilds(containerRespuestas);
+
         if(alPreguntas.get(pregAct).charAt(0) != '*'){
-            containerRespuestas.setVisibility(View.VISIBLE);
+
+            mpGut = MediaPlayer.create(this, R.raw.si_tiritititiiiiiii);
+            mpNope = MediaPlayer.create(this, R.raw.minecraft_old_pupa);
+
+            containerRespuestas.getChildAt(0).setVisibility(View.VISIBLE);
 
             for (int i = 0; i < botones.size(); i++){
 
@@ -317,9 +269,47 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
-            pregBUTTAct++;
         }else{
-            pregIMGAct++;
+
+            mpGut = MediaPlayer.create(this, R.raw.sabe_una_cosa);
+            mpNope = MediaPlayer.create(this, R.raw.mensajero_de_dios);
+
+            containerRespuestas.getChildAt(1).setVisibility(View.VISIBLE);
+
+            for (int i = 0; i < alIMGRespuestas.get(pregIMGAct).size(); i++){
+
+                imagenes.get(i).setBackgroundResource(alIMGRespuestas.get(pregIMGAct).get(i).drawableID);
+
+                if(alIMGRespuestas.get(pregIMGAct).get(i).respuesta.charAt(0) != '*'){
+
+                    imagenes.get(i).setOnClickListener(new View.OnClickListener(){
+                        @Override
+                        public void onClick(View v) {
+                            imagenIncorrecta();
+
+                            LinearLayout papi = (LinearLayout) v.getParent();
+                            papi.setPadding(5, 5, 5, 5);
+                            papi.setBackgroundColor(Color.RED);
+
+                            mpNope.start();
+                        }
+                    });
+                }else{
+
+                    imagenes.get(i).setOnClickListener(new View.OnClickListener(){
+                        @Override
+                        public void onClick(View v) {
+                            imagenCorrecta();
+
+                            LinearLayout papi = (LinearLayout) v.getParent();
+                            papi.setPadding(5, 5, 5, 5);
+                            papi.setBackgroundColor(Color.GREEN);
+
+                            mpGut.start();
+                        }
+                    });
+                }
+            }
         }
 
 
@@ -358,6 +348,10 @@ public class MainActivity extends AppCompatActivity {
             botones.get(i).setEnabled(false);
         }
 
+        mpGut.start();
+
+        pregBUTTAct++;
+
     }
 
     private void botonIncorrecto(){
@@ -368,6 +362,10 @@ public class MainActivity extends AppCompatActivity {
 
             botones.get(i).setEnabled(false);
         }
+
+        mpNope.start();
+
+        pregBUTTAct++;
 
     }
 }
