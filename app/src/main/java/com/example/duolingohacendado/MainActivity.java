@@ -10,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
@@ -23,11 +24,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
     MediaPlayer mpGut, mpNope, mpFin;
     Button continuar;
+    TextToSpeech textToSpeech;
 
     int numPreg;
 
@@ -76,7 +79,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+
+                // if No error is found then only it will run
+                if(i!=TextToSpeech.ERROR){
+                    // To Choose language of speech
+                    textToSpeech.setLanguage(Locale.UK);
+                }
+            }
+        });
+
         TextView textPreguntas = (TextView) findViewById(R.id.textoPregunta);
+
+        //implementando text to speech
+
+        textPreguntas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textToSpeech.speak(textPreguntas.getText().toString(),TextToSpeech.QUEUE_FLUSH,null);
+            }
+        });
 
         continuar = findViewById(R.id.cumtinuar);
 
