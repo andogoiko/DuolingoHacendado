@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DuolingoHacendado</string>
+    <array name="preguntas">
+        <item name="pregunta1">*Who is the messenger of god?</item>
+        <item name="pregunta2">When does Bleach return in 2022?</item>
+        <item name="pregunta3">What mark does this work deserve?</item>
+    </array>
+    <array name="respBot1">
+        <item name="resp1"><string>*October 10</string></item>
+        <item name="resp2"><string>October 3</string></item>
+        <item name="resp3"><string>October 27</string></item>
+        <item name="resp4"><string>October 19</string></item>
+    </array>
+    <array name="respBot2">
+        <item name="resp1"><string>3</string></item>
+        <item name="resp2"><string>7</string></item>
+        <item name="resp3"><string>4</string></item>
+        <item name="resp4"><string>*10</string></item>
+    </array>
+    <string name="correcto">¡Correct!</string>
+    <string name="incorrecto">¡Incorrect!</string>
+    <string name="fin">Your score is:</string>
+    <string name="botonSig">Next</string>
+    <string name="activity2">Another quiz</string>
+</resources>

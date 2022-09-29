@@ -1,3 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">DuolingoHacendado</string>
+    <array name="preguntas">
+        <item name="pregunta1">*¿Quién es el mensajero de dios?</item>
+        <item name="pregunta2">¿Cuándo vuelve Bleach en 2022?</item>
+        <item name="pregunta3">¿Qué nota merece este trabajo?</item>
+    </array>
+    <array name="respBot1">
+        <item name="resp1">
+            <string>*10 de Octubre</string>
+        </item>
+        <item name="resp2">
+            <string>3 de Octubre</string>
+        </item>
+        <item name="resp3">
+            <string>27 de Octubre</string>
+        </item>
+        <item name="resp4">
+            <string>19 de Octubre</string>
+        </item>
+    </array>
+    <array name="respBot2">
+        <item name="resp1">
+            <string>3</string>
+        </item>
+        <item name="resp2">
+            <string>7</string>
+        </item>
+        <item name="resp3">
+            <string>4</string>
+        </item>
+        <item name="resp4">
+            <string>*10</string>
+        </item>
+    </array>
+    <string name="correcto">¡Correcto!</string>
+    <string name="incorrecto">¡Incorrecto!</string>
+    <string name="fin">Tu puntuación es:</string>
+    <string name="botonSig">Siguiente</string>
+    <string name="activity2">Otro quiz</string>
 </resources>

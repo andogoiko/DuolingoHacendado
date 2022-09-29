@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     //array con todas las preguntas
 
-    List<String> alPreguntas = new ArrayList<String>(Arrays.asList("*¿Quién es el mensajero de dios?", "¿Cuándo vuelve Bleach en 2022?", "¿Qué nota merece este trabajo?"));
+    List<String> alPreguntas;
 
     // arrays con las respuestas de las imágenes
 
@@ -65,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
     List<List<String>> alRespuestas = new ArrayList<List<String>>();
 
-    List<String> res1 = new ArrayList<String>(Arrays.asList("*10 de Octubre", "3 de Octubre", "27 de Octubre", "19 de Octubre"));
+    List<String> res1;
 
-    List<String> res2 = new ArrayList<String>(Arrays.asList("3", "7", "4", "*10"));
+    List<String> res2;
 
     // arrays para saber a que objeto button o imageview nos referimos (sirve para hacer apaño dinámico)
 
@@ -78,6 +79,48 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // añadiendo data a arrays
+
+        alPreguntas = Arrays.asList(getResources().getStringArray(R.array.preguntas));
+
+        res1 = Arrays.asList(getResources().getStringArray(R.array.respBot1));
+
+        res2 = Arrays.asList(getResources().getStringArray(R.array.respBot2));
+
+        /*mezclamos las respuestas de los arrays*/
+
+        for (int i = 0; i < alIMGRespuestas.size(); i++){
+            Collections.shuffle(alIMGRespuestas.get(i));
+        }
+
+        Collections.shuffle(res1);
+        Collections.shuffle(res2);
+
+        //introducimos las respuestas nuevas
+
+        alRespuestas.add(res1);
+        alRespuestas.add(res2);
+
+        //cogemos la cantidad de preguntas
+
+        numPreg = alPreguntas.size();
+
+        //recogemos las imágenes a pelo (no hay otra forma)
+
+        imagenes.add(findViewById(R.id.IV1));
+        imagenes.add(findViewById(R.id.IV2));
+        imagenes.add(findViewById(R.id.IV3));
+        imagenes.add(findViewById(R.id.IV4));
+
+        //recogemos los botones a pelo
+
+        botones.add(findViewById(R.id.bResp1));
+        botones.add(findViewById(R.id.bResp2));
+        botones.add(findViewById(R.id.bResp3));
+        botones.add(findViewById(R.id.bResp4));
+
+        // funcionalidad text to speech
 
         textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -101,6 +144,20 @@ public class MainActivity extends AppCompatActivity {
                 textToSpeech.speak(textPreguntas.getText().toString(),TextToSpeech.QUEUE_FLUSH,null);
             }
         });
+
+        // funcionalidad del boton continuar a la siguiente pregunta
+
+        continuar();
+
+        // colocamos las preguntas y respuestas para comenzar el programa
+
+        colocarPreguntas(textPreguntas);
+
+        colocarRespuestas(findViewById(R.id.answersContainer));
+
+    }
+
+    private void continuar(){
 
         continuar = findViewById(R.id.cumtinuar);
 
@@ -129,9 +186,12 @@ public class MainActivity extends AppCompatActivity {
                         mpFin = MediaPlayer.create(getApplicationContext(), R.raw.movistar_temazo);
                     }
 
+                    mpGut.stop();
+                    mpNope.stop();
+
                     mpFin.start();
 
-                    textPreguntas.setText("Tu puntuación es:");
+                    textPreguntas.setText(getString(R.string.fin));
                     textPreguntas.setTextSize(30);
 
                     TextView resul = (TextView) findViewById(R.id.textPuntuacion);
@@ -140,53 +200,30 @@ public class MainActivity extends AppCompatActivity {
                     findViewById(R.id.layPuntuacion).setVisibility(View.VISIBLE);
 
                     continuar.setVisibility(View.GONE);
+
+                    Button nextActivity = (Button) findViewById(R.id.botonNextActivity);
+
+                    nextActivity.setVisibility(View.VISIBLE);
+
+                    nextActivity.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            mpFin.stop();
+
+                            Intent myIntent = new Intent(MainActivity.this, SecondActivity.class);
+                            //myIntent.putExtra("key", value); //Optional parameters
+                            MainActivity.this.startActivity(myIntent);
+                        }
+                    });
                 }
 
             }
         });
-
-        /*mezclamos las respuestas*/
-
-        for (int i = 0; i < alIMGRespuestas.size(); i++){
-            Collections.shuffle(alIMGRespuestas.get(i));
-        }
-
-        Collections.shuffle(res1);
-        Collections.shuffle(res2);
-
-        //recogemos las imágenes a pelo (no hay otra forma)
-
-        imagenes.add(findViewById(R.id.IV1));
-        imagenes.add(findViewById(R.id.IV2));
-        imagenes.add(findViewById(R.id.IV3));
-        imagenes.add(findViewById(R.id.IV4));
-
-        //recogemos los botones a pelo
-
-        botones.add(findViewById(R.id.bResp1));
-        botones.add(findViewById(R.id.bResp2));
-        botones.add(findViewById(R.id.bResp3));
-        botones.add(findViewById(R.id.bResp4));
-
-        //introducimos las respuestas nuevas
-
-        alRespuestas.add(res1);
-        alRespuestas.add(res2);
-
-        //cogemos la cantidad de preguntas
-
-        numPreg = alPreguntas.size();
-
-        // iniciamos el programa
-
-        colocarPreguntas(textPreguntas);
-
-        colocarRespuestas(findViewById(R.id.answersContainer));
-
     }
 
     private void imagenIncorrecta(){
-        Toast.makeText(MainActivity.this, "¡Incorrecta!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, getString(R.string.incorrecto), Toast.LENGTH_SHORT).show();
 
         for (int i = 0; i < alIMGRespuestas.get(pregIMGAct).size(); i++){
             imagenes.get(i).getBackground().setColorFilter(Color.parseColor("#7A7A7A"), PorterDuff.Mode.MULTIPLY);
@@ -202,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
     private void imagenCorrecta(){
         aciertos++;
 
-        Toast.makeText(MainActivity.this, "¡Correcta!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, getString(R.string.correcto), Toast.LENGTH_SHORT).show();
 
         for (int i = 0; i < alIMGRespuestas.get(pregIMGAct).size(); i++){
             imagenes.get(i).getBackground().setColorFilter(Color.parseColor("#7A7A7A"), PorterDuff.Mode.MULTIPLY);
@@ -250,6 +287,8 @@ public class MainActivity extends AppCompatActivity {
 
         cleanChilds(containerRespuestas);
 
+        // para respuestas de imagen
+
         if(alPreguntas.get(pregAct).charAt(0) != '*'){
 
             mpGut = MediaPlayer.create(this, R.raw.si_tiritititiiiiiii);
@@ -259,7 +298,10 @@ public class MainActivity extends AppCompatActivity {
 
             for (int i = 0; i < botones.size(); i++){
 
+                // repuestas correctas
+
                 if(alRespuestas.get(pregBUTTAct).get(i).charAt(0) != '*'){
+
                     botones.get(i).setText(alRespuestas.get(pregBUTTAct).get(i));
 
                     botones.get(i).setOnClickListener(new View.OnClickListener(){
@@ -274,6 +316,9 @@ public class MainActivity extends AppCompatActivity {
                     });
 
                 }else{
+
+                    // respuestas incorrectas
+
                     botones.get(i).setText(alRespuestas.get(pregBUTTAct).get(i).substring(1));
                     botones.get(i).setOnClickListener(new View.OnClickListener(){
                         @Override
@@ -295,6 +340,8 @@ public class MainActivity extends AppCompatActivity {
 
         }else{
 
+            // para respuestas de botón
+
             mpGut = MediaPlayer.create(this, R.raw.sabe_una_cosa);
             mpNope = MediaPlayer.create(this, R.raw.mensajero_de_dios);
 
@@ -303,6 +350,8 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < alIMGRespuestas.get(pregIMGAct).size(); i++){
 
                 imagenes.get(i).setBackgroundResource(alIMGRespuestas.get(pregIMGAct).get(i).drawableID);
+
+                // repuestas correctas
 
                 if(alIMGRespuestas.get(pregIMGAct).get(i).respuesta.charAt(0) != '*'){
 
@@ -319,6 +368,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 }else{
+
+                    // repuestas incorrectas
 
                     imagenes.get(i).setOnClickListener(new View.OnClickListener(){
                         @Override
@@ -365,7 +416,7 @@ public class MainActivity extends AppCompatActivity {
 
         aciertos++;
 
-        Toast.makeText(MainActivity.this, "¡Correcta!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, getString(R.string.correcto), Toast.LENGTH_SHORT).show();
 
         for (int i = 0; i < botones.size(); i++){
 
@@ -380,7 +431,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void botonIncorrecto(){
 
-        Toast.makeText(MainActivity.this, "¡Incorrecta!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, getString(R.string.incorrecto), Toast.LENGTH_SHORT).show();
 
         for (int i = 0; i < botones.size(); i++){
 
