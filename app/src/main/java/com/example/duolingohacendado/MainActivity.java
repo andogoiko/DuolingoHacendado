@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
 
                     if (aciertos == 0){
-                        mpFin = MediaPlayer.create(getApplicationContext(), R.raw.c_murio);
+                        mpFin = MediaPlayer.create(getApplicationContext(), R.raw.jovani_vazquez_elden_ring);
                     }else{
                         mpFin = MediaPlayer.create(getApplicationContext(), R.raw.movistar_temazo);
                     }
@@ -287,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
 
         cleanChilds(containerRespuestas);
 
-        // para respuestas de imagen
+        // para respuestas de botón
 
         if(alPreguntas.get(pregAct).charAt(0) != '*'){
 
@@ -298,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
 
             for (int i = 0; i < botones.size(); i++){
 
-                // repuestas correctas
+                // repuestas incorrectas
 
                 if(alRespuestas.get(pregBUTTAct).get(i).charAt(0) != '*'){
 
@@ -317,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }else{
 
-                    // respuestas incorrectas
+                    // respuestas correctas
 
                     botones.get(i).setText(alRespuestas.get(pregBUTTAct).get(i).substring(1));
                     botones.get(i).setOnClickListener(new View.OnClickListener(){
@@ -340,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
 
         }else{
 
-            // para respuestas de botón
+            // para respuestas de imagen
 
             mpGut = MediaPlayer.create(this, R.raw.sabe_una_cosa);
             mpNope = MediaPlayer.create(this, R.raw.mensajero_de_dios);
@@ -351,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
 
                 imagenes.get(i).setBackgroundResource(alIMGRespuestas.get(pregIMGAct).get(i).drawableID);
 
-                // repuestas correctas
+                // repuestas incorrectas
 
                 if(alIMGRespuestas.get(pregIMGAct).get(i).respuesta.charAt(0) != '*'){
 
@@ -369,7 +369,7 @@ public class MainActivity extends AppCompatActivity {
                     });
                 }else{
 
-                    // repuestas incorrectas
+                    // repuestas correctas
 
                     imagenes.get(i).setOnClickListener(new View.OnClickListener(){
                         @Override
