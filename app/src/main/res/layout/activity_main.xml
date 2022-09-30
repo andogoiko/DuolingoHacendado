@@ -243,10 +243,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/activity2"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/answersContainer"
-        android:visibility="gone" />
+        app:layout_constraintEnd_toEndOf="@+id/answersContainer"
+        app:layout_constraintTop_toBottomOf="@+id/answersContainer" />
+
+    <Button
+        android:id="@+id/bReintentar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reintentar"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/answersContainer"
+        app:layout_constraintTop_toBottomOf="@+id/answersContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

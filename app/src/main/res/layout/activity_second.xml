@@ -10,22 +10,24 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginTop="40dp"
+        android:text="@string/app2_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="403dp"
-        android:layout_height="88dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tvPregunta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -33,17 +35,19 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="572dp"
-        android:orientation="horizontal"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <ScrollView
+            android:id="@+id/svPreg"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="visible">
 
 
             <LinearLayout
@@ -57,7 +61,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/button10"
+                        android:id="@+id/botoncito1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Button" />
@@ -69,7 +73,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/button9"
+                        android:id="@+id/botoncito2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Button" />
@@ -81,7 +85,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/button8"
+                        android:id="@+id/botoncito3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Button" />
@@ -93,7 +97,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/button7"
+                        android:id="@+id/botoncito4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Button" />
@@ -105,7 +109,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/button6"
+                        android:id="@+id/botoncito5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Button" />
@@ -117,7 +121,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/button5"
+                        android:id="@+id/botoncito6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Button" />
@@ -129,7 +133,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/button4"
+                        android:id="@+id/botoncito7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Button" />
@@ -141,7 +145,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/button3"
+                        android:id="@+id/botoncito8"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Button" />
@@ -153,7 +157,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/button2"
+                        android:id="@+id/botoncito9"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Button" />
@@ -165,13 +169,22 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/botoncito10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Button" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
+
+        <TextView
+            android:id="@+id/tvFinito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/the_end"
+            android:visibility="gone" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

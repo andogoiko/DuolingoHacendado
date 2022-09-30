@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -145,19 +146,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // funcionalidad del boton continuar a la siguiente pregunta
-
-        continuar();
-
         // colocamos las preguntas y respuestas para comenzar el programa
 
         colocarPreguntas(textPreguntas);
 
         colocarRespuestas(findViewById(R.id.answersContainer));
 
-    }
-
-    private void continuar(){
+        // funcionalidad del botón continuar, la cual irá tirando del programa
 
         continuar = findViewById(R.id.cumtinuar);
 
@@ -201,6 +196,8 @@ public class MainActivity extends AppCompatActivity {
 
                     continuar.setVisibility(View.GONE);
 
+                    // botón siguente acticvidad
+
                     Button nextActivity = (Button) findViewById(R.id.botonNextActivity);
 
                     nextActivity.setVisibility(View.VISIBLE);
@@ -216,10 +213,29 @@ public class MainActivity extends AppCompatActivity {
                             MainActivity.this.startActivity(myIntent);
                         }
                     });
+
+                    // botón reintentar
+
+                    Button reintentar = (Button) findViewById(R.id.bReintentar);
+
+                    reintentar.setVisibility(View.VISIBLE);
+
+                    reintentar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            mpFin.stop();
+
+                            Activity mActivity = MainActivity.this;
+                            mActivity.recreate();
+                        }
+                    });
+
                 }
 
             }
         });
+
     }
 
     private void imagenIncorrecta(){
@@ -384,6 +400,12 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 }
+            }
+
+            // por si hay más preguntas de imágenes o si se reinici, les quitamos el filtro
+
+            for (int i = 0; i < imagenes.size(); i++){
+                imagenes.get(i).getBackground().clearColorFilter();
             }
         }
 

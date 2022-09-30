@@ -22,5 +22,49 @@
     <string name="incorrecto">¡Incorrect!</string>
     <string name="fin">Your score is:</string>
     <string name="botonSig">Next</string>
+    <string name="reintentar">Retry</string>
     <string name="activity2">Another quiz</string>
+    <string name="app2_name">2nd activity</string>
+    <array name="preguntas2Act">
+        <item name="pregunta1">Who is the famous singer of Elden Ring?</item>
+        <item name="pregunta2">What is Torrente"'"s most famous phrase?</item>
+        <item name="pregunta3">Which programming language is the worst?</item>
+    </array>
+    <array name="act2RespP1">
+        <item name="resp1"><string>*Jovani Vázquez</string></item>
+        <item name="resp2"><string>Eminem</string></item>
+        <item name="resp3"><string>Chystemc</string></item>
+        <item name="resp4"><string>Zasko</string></item>
+        <item name="resp5"><string>Paco Rabanne</string></item>
+        <item name="resp6"><string>Jean-Claude Van Damme</string></item>
+        <item name="resp7"><string>Nikone</string></item>
+        <item name="resp8"><string>Chayanne</string></item>
+        <item name="resp9"><string>Juan Magan</string></item>
+        <item name="resp10"><string>Juanma</string></item>
+    </array>
+    <array name="act2RespP2">
+        <item name="resp1"><string>*¿Nos hacemos unas pajillas?</string></item>
+        <item name="resp2"><string>chisst chinita</string></item>
+        <item name="resp3"><string>vais vais</string></item>
+        <item name="resp4"><string>quita bicho</string></item>
+        <item name="resp5"><string>ponlo a mi cuenta</string></item>
+        <item name="resp6"><string>ale, más sustancia</string></item>
+        <item name="resp7"><string>El Fary es lo más sagrado</string></item>
+        <item name="resp8"><string>aupa aleti</string></item>
+        <item name="resp9"><string>está la cosa mu mal</string></item>
+        <item name="resp10"><string>Agente Jose Luis Torrente a su servicio señora</string></item>
+    </array>
+    <array name="act2RespP3">
+        <item name="resp1"><string>*PHP undoubtedly</string></item>
+        <item name="resp2"><string>Python</string></item>
+        <item name="resp3"><string>Kotlin</string></item>
+        <item name="resp4"><string>Java</string></item>
+        <item name="resp5"><string>Javascript</string></item>
+        <item name="resp6"><string>C++</string></item>
+        <item name="resp7"><string>C#</string></item>
+        <item name="resp8"><string>Visual Basic</string></item>
+        <item name="resp9"><string>TypeScript</string></item>
+        <item name="resp10"><string>Ruby</string></item>
+    </array>
+    <string name="the_end">!Congratulations! You have finished the quiz</string>
 </resources>
